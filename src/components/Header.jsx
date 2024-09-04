@@ -5,27 +5,47 @@ const KEY = "36be1ae7";
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
-
   const { setMovies } = useMoviesContext();
+  const { setIsLoading } = useMoviesContext();
+  const { setError } = useMoviesContext();
 
   useEffect(
     function () {
-      if (searchTerm !== "") {
-        fetch(
-          `https://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${searchTerm}&page=1`,
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            data.Response === "False" ? setMovies([]) : setMovies(data.Search);
-          });
+      async function fetchMovies() {
+        try {
+          setError("");
+          setIsLoading(true);
+          const res = await fetch(
+            `https://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${searchTerm}&page=1`,
+          );
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+          const data = await res.json();
+          // console.log(data);
+          if (data.Response === "False") throw new Error("Movie not found");
+          setMovies(data.Search);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
       }
+      if (searchTerm.length < 3) {
+        setError("");
+        setIsLoading(false);
+        setMovies([]);
+        return;
+      }
+      fetchMovies();
     },
-    [searchTerm, setMovies],
+    [searchTerm, setMovies, setIsLoading, setError],
   );
 
   return (
-    <form className="grid grid-cols-[1fr_4rem] bg-slate-800 px-8 py-5">
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="grid grid-cols-[1fr_4rem] bg-slate-800 px-8 py-5"
+    >
       <input
         type="text"
         placeholder="search movies..."

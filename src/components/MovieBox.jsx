@@ -1,8 +1,13 @@
 import { useState } from "react";
 import SearchResults from "./SearchResults";
+import useMoviesContext from "../context/moviesContext";
+import Loader from "./Loader";
+import Error from "./Error";
 
 function MovieBox() {
   const [showResults, setShowResults] = useState(true);
+  const { isLoading } = useMoviesContext();
+  const { error } = useMoviesContext();
 
   return (
     <main className="flex grow flex-col px-2">
@@ -22,7 +27,9 @@ function MovieBox() {
         </button>
       </div>
       <div className="relative z-10 grow bg-slate-800">
-        {showResults && <SearchResults />}
+        {showResults && error !== "" && <Error>{error}</Error>}
+        {showResults && error === "" && isLoading && <Loader />}
+        {showResults && error === "" && !isLoading && <SearchResults />}
       </div>
     </main>
   );

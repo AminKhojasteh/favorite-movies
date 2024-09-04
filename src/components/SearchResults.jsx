@@ -3,7 +3,6 @@ import Movie from "./Movie";
 
 function SearchResults() {
   const { movies } = useMoviesContext();
-  console.log(movies);
 
   return (
     <div className="flex h-full flex-col gap-2 px-4 py-4">
