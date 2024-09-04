@@ -18,7 +18,7 @@ function StarRating({
   strokeWidth = 3,
   color = "#eab308",
   extraStyle = {},
-  onSetRating,
+  onSetRating = {},
 }) {
   const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);

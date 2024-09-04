@@ -7,6 +7,7 @@ const Provider = function ({ children }) {
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [movieId, setMovieId] = useState(null);
 
   const sharedValues = {
     movies,
@@ -17,6 +18,8 @@ const Provider = function ({ children }) {
     setIsLoading,
     error,
     setError,
+    movieId,
+    setMovieId,
   };
 
   return (

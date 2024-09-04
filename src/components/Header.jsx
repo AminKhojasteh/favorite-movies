@@ -16,7 +16,7 @@ function Header() {
           setError("");
           setIsLoading(true);
           const res = await fetch(
-            `https://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${searchTerm}&page=1`,
+            `https://www.omdbapi.com/?apikey=${KEY}&s=${searchTerm}&page=1`,
           );
           if (!res.ok)
             throw new Error("Something went wrong with fetching movies");
@@ -44,14 +44,14 @@ function Header() {
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="grid grid-cols-[1fr_4rem] bg-slate-800 px-8 py-5"
+      className="grid grid-cols-[1fr_max-content] gap-x-3 bg-slate-800 px-4 py-5"
     >
       <input
         type="text"
         placeholder="search movies..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="text-md h-10 w-80 justify-self-start rounded-md bg-yellow-500 px-3 text-slate-800 placeholder-slate-500 outline-none transition-all duration-300 focus:scale-105"
+        className="text-md h-10 w-full justify-self-start rounded-md bg-yellow-500 px-3 text-slate-800 placeholder-slate-500 outline-none transition-all duration-300 focus:scale-105"
       />
       <img src="./imdb.svg" alt="logo" className="w-10 justify-self-end" />
     </form>
