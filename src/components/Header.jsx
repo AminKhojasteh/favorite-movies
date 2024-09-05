@@ -5,9 +5,10 @@ const KEY = "36be1ae7";
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { setMovies } = useMoviesContext();
+  const { setSearchedMoviesList } = useMoviesContext();
   const { setIsLoading } = useMoviesContext();
   const { setError } = useMoviesContext();
+  const { setShowSearchedMovies } = useMoviesContext();
 
   useEffect(
     function () {
@@ -15,6 +16,7 @@ function Header() {
         try {
           setError("");
           setIsLoading(true);
+          setShowSearchedMovies(true);
           const res = await fetch(
             `https://www.omdbapi.com/?apikey=${KEY}&s=${searchTerm}&page=1`,
           );
@@ -23,7 +25,7 @@ function Header() {
           const data = await res.json();
           // console.log(data);
           if (data.Response === "False") throw new Error("Movie not found");
-          setMovies(data.Search);
+          setSearchedMoviesList(data.Search);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -33,18 +35,18 @@ function Header() {
       if (searchTerm.length < 3) {
         setError("");
         setIsLoading(false);
-        setMovies([]);
+        setSearchedMoviesList([]);
         return;
       }
       fetchMovies();
     },
-    [searchTerm, setMovies, setIsLoading, setError],
+    [searchTerm, setSearchedMoviesList, setIsLoading, setError],
   );
 
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="grid grid-cols-[1fr_max-content] gap-x-3 bg-slate-800 px-4 py-5"
+      className="grid grid-cols-[1fr_max-content] gap-x-5 bg-slate-800 px-5 py-5"
     >
       <input
         type="text"

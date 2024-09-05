@@ -3,23 +3,29 @@ import { createContext, useContext, useState } from "react";
 const moviesContext = createContext();
 
 const Provider = function ({ children }) {
-  const [movies, setMovies] = useState([]);
-  const [watchedMovies, setWatchedMovies] = useState([]);
+  const [searchedMoviesList, setSearchedMoviesList] = useState([]);
+  const [watchedMoviesList, setWatchedMoviesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [movieId, setMovieId] = useState(null);
+  const [showSearchedMovies, setShowSearchedMovies] = useState(true);
+  const [searchedMovieId, setSearchedMovieId] = useState(null);
+  const [watchedMovieId, setWatchedMovieId] = useState(null);
 
   const sharedValues = {
-    movies,
-    setMovies,
-    watchedMovies,
-    setWatchedMovies,
+    searchedMoviesList,
+    setSearchedMoviesList,
+    watchedMoviesList,
+    setWatchedMoviesList,
     isLoading,
     setIsLoading,
     error,
     setError,
-    movieId,
-    setMovieId,
+    showSearchedMovies,
+    setShowSearchedMovies,
+    searchedMovieId,
+    setSearchedMovieId,
+    watchedMovieId,
+    setWatchedMovieId,
   };
 
   return (

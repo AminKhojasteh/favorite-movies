@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Error from "./Error";
 import Loader from "./Loader";
-import MovieDetails from "./MovieDetails";
+import SearchedMovieDetails from "./SearchedMovieDetails";
 
 const KEY = "36be1ae7";
 
-function MovieDetailsBox({ id }) {
+function SearchedMovieDetailBox({ id }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [movieData, setMovieData] = useState("");
@@ -36,14 +36,14 @@ function MovieDetailsBox({ id }) {
   );
 
   return (
-    <div>
+    <div className="grow">
       {error !== "" && <Error>{error}</Error>}
       {error === "" && isLoading && <Loader />}
       {error === "" && !isLoading && movieData !== "" && (
-        <MovieDetails movieData={movieData} />
+        <SearchedMovieDetails movieData={movieData} />
       )}
     </div>
   );
 }
 
-export default MovieDetailsBox;
+export default SearchedMovieDetailBox;

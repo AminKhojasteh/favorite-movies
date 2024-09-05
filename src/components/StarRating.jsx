@@ -51,7 +51,7 @@ function StarRating({
             strokeWidth={`${strokeWidth / 100}rem`}
             role="button"
             key={index}
-            onClick={(index) => handleClick(index + 1)}
+            onClick={() => handleClick(index + 1)}
             onMouseEnter={() => setTempRating(index + 1)}
             onMouseLeave={() => setTempRating(0)}
             style={{
