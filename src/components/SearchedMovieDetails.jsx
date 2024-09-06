@@ -60,7 +60,9 @@ function SearchedMovieDetails({ movieData }) {
         <h6 className="text-[0.625rem] font-semibold text-slate-500">
           Director:
         </h6>
-        <span className="text-[0.625rem]">{movieData.Director}</span>
+        <span className="text-[0.625rem]">
+          {movieData.Director === "N/A" ? "-" : movieData.Director}
+        </span>
       </div>
       <div className="flex flex-col">
         <h6 className="text-[0.625rem] font-semibold text-slate-500">

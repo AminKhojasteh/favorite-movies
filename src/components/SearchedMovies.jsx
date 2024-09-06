@@ -7,7 +7,7 @@ function SearchedMovies() {
   return (
     <ul className="flex h-full flex-col gap-2 p-2">
       {searchedMoviesList.map((movie) => (
-        <SearchedMovie movie={movie} key={movie.imdbID} />
+        <SearchedMovie movieData={movie} key={movie.imdbID} />
       ))}
     </ul>
   );

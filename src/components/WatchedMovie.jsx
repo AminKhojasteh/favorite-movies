@@ -5,8 +5,6 @@ function WatchedMovie({ movieData }) {
   const { watchedMovieId, setWatchedMovieId, setWatchedMoviesList } =
     useMoviesContext();
 
-  console.log(movieData);
-
   const isOpen = movieData.imdbID === watchedMovieId;
 
   const handleSaveClick = function () {
@@ -26,7 +24,11 @@ function WatchedMovie({ movieData }) {
       className={`bg-slate-900 ${isOpen ? "h-[32rem]" : "h-28"} flex flex-col overflow-hidden rounded-lg transition-all duration-500`}
     >
       <div className="grid h-28 cursor-pointer grid-cols-[5rem_1fr_2rem_5rem] grid-rows-[4.5rem_1.5rem] items-center gap-x-2 p-2">
-        <img src={movieData.Poster} className="row-span-2 h-full" />
+        <img
+          src={movieData.Poster}
+          alt={`${movieData.Title} Poster`}
+          className="row-span-2 h-full"
+        />
         <h3 className="col-span-3 text-sm font-semibold text-slate-200">
           {movieData.Title}
         </h3>

@@ -10,8 +10,15 @@ function Header() {
   const { setError } = useMoviesContext();
   const { setShowSearchedMovies } = useMoviesContext();
 
+  const handlInputChange = function (e) {
+    const userInput = e.target.value;
+    setSearchTerm(userInput);
+  };
+
   useEffect(
     function () {
+      // const controller = new AbortController();
+
       async function fetchMovies() {
         try {
           setError("");
@@ -20,6 +27,10 @@ function Header() {
           const res = await fetch(
             `https://www.omdbapi.com/?apikey=${KEY}&s=${searchTerm}&page=1`,
           );
+          // const res = await fetch(
+          //   `https://www.omdbapi.com/?apikey=${KEY}&s=${searchTerm}&page=1`,
+          //   { signal: controller.signal },
+          // );
           if (!res.ok)
             throw new Error("Something went wrong with fetching movies");
           const data = await res.json();
@@ -27,20 +38,37 @@ function Header() {
           if (data.Response === "False") throw new Error("Movie not found");
           setSearchedMoviesList(data.Search);
         } catch (err) {
+          // if (err.name !== "AbortError") setError(err.message);
           setError(err.message);
         } finally {
           setIsLoading(false);
         }
       }
+
       if (searchTerm.length < 3) {
         setError("");
         setIsLoading(false);
         setSearchedMoviesList([]);
         return;
       }
-      fetchMovies();
+
+      const delayFetch = setTimeout(() => {
+        fetchMovies();
+      }, 2000);
+      return () => clearTimeout(delayFetch);
+
+      // fetchMovies();
+      // return function () {
+      //   controller.abort();
+      // };
     },
-    [searchTerm, setSearchedMoviesList, setIsLoading, setError],
+    [
+      searchTerm,
+      setSearchedMoviesList,
+      setIsLoading,
+      setError,
+      setShowSearchedMovies,
+    ],
   );
 
   return (
@@ -52,8 +80,8 @@ function Header() {
         type="text"
         placeholder="search movies..."
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="text-md h-10 w-full justify-self-start rounded-md bg-yellow-500 px-3 text-slate-800 placeholder-slate-500 outline-none transition-all duration-300 focus:scale-105"
+        onChange={handlInputChange}
+        className="text-md h-10 w-full justify-self-start rounded-md bg-yellow-500 px-3 text-slate-800 placeholder-slate-500 outline-none transition-all duration-300 focus:scale-105 sm:w-96 sm:focus:scale-100"
       />
       <img src="./imdb.svg" alt="logo" className="w-10 justify-self-end" />
     </form>

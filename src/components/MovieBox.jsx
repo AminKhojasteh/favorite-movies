@@ -3,11 +3,20 @@ import Loader from "./Loader";
 import Error from "./Error";
 import SearchedMovies from "./SearchedMovies";
 import WatchedMovies from "./WatchedMovies";
+import { useEffect } from "react";
 
 function MovieBox() {
   const { showSearchedMovies, setShowSearchedMovies } = useMoviesContext();
+  const { watchedMoviesList } = useMoviesContext();
   const { isLoading } = useMoviesContext();
   const { error } = useMoviesContext();
+
+  useEffect(
+    function () {
+      localStorage.setItem("watchedMovies", JSON.stringify(watchedMoviesList));
+    },
+    [watchedMoviesList],
+  );
 
   return (
     <main className="flex grow flex-col px-2">
