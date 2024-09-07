@@ -1,15 +1,11 @@
 import { createContext, useContext, useState } from "react";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 const moviesContext = createContext();
 
 const Provider = function ({ children }) {
   const [searchedMoviesList, setSearchedMoviesList] = useState([]);
-  const [watchedMoviesList, setWatchedMoviesList] = useState(function () {
-    const savedWatchedMovieList = localStorage.getItem("watchedMovies");
-    return savedWatchedMovieList === null
-      ? []
-      : JSON.parse(savedWatchedMovieList);
-  });
+  const [watchedMoviesList, setWatchedMoviesList] = useLocalStorageState("watchedMovies", [])
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showSearchedMovies, setShowSearchedMovies] = useState(true);

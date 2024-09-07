@@ -17,7 +17,7 @@ function SearchedMovieDetailBox({ id }) {
           setError("");
           setIsLoading(true);
           const res = await fetch(
-            `https://www.omdbapi.com/?apikey=${KEY}&i=${id}`,
+            `https://www.omdbapi.com/?apikey=${KEY}&plot=short&i=${id}`,
           );
           if (!res.ok)
             throw new Error("Something went wrong with fetching movies");
